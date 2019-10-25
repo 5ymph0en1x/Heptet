@@ -1,0 +1,70 @@
+StateSpaceNetworkSampleType: index
+StateSpaceEngineSampleConversion: index_to_dict
+
+
+ActionSpaceNetworkSampleType: exploration
+ActionSpaceEngineSampleConversion: index_to_dict
+
+
+AgentLearningRate: 0.001
+AgentEpochCounter: Counter_1
+AgentIterationCounter: Counter_2
+AgentIsUpdateNetwork: True
+
+
+ExplorationMethod: boltzmann
+ExplorationBoltzmannProbAttribute: prob_dist
+ExplorationCounter: Counter_4
+
+
+AgentModelSaverSavePath: ./STATICS/CKPT
+AgentModelSaverSaveName: cointegration
+
+
+AgentModelSaverRestorePath: ./STATICS/CKPT
+AgentModelSaverRestoreName: cointegration
+
+
+ExperienceReplay: True
+ExperienceBufferBufferSize: 10000
+ExperienceBufferSamplingSize: 1
+ExperienceReplayFreq: 5
+
+
+RecorderDataField: [NETWORK_ACTION, ENGINE_REWARD, ENGINE_RECORD]
+RecorderRecordFreq: 1
+
+
+Counter:
+  Counter_1:
+    name: Epoch
+    start_num: 0
+    end_num: 10
+    step_size: 1
+    n_buffer: 0
+    is_descend: False
+    print_freq: 1
+  Counter_2:
+    name: Iteration
+    start_num: 0
+    end_num: 10000
+    step_size: 1
+    n_buffer: 10000
+    is_descend: False
+    print_freq: 1000
+  Counter_3:
+    name: EGreedyProb
+    start_num: 1
+    end_num: 0.1
+    step_size: 0.0001
+    n_buffer: 30000
+    is_descend: True
+    print_freq:
+  Counter_4:
+    name: BoltzmannTemp
+    start_num: 1
+    end_num: 0.2
+    step_size: 0.0001
+    n_buffer: 30000
+    is_descend: True
+    print_freq:

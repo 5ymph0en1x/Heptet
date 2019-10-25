@@ -1,0 +1,6 @@
+Instrument_A: EUR_JPY
+Instrument_B: GBP_JPY
+DataOandaAccount: required
+DataOandaToken: required
+DataTgrChatID: optional
+DataTgrToken: optional
