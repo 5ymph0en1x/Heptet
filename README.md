@@ -1,7 +1,7 @@
 # Pair Trading - Reinforcement Learning - with Oanda Trading API
 
 <p align="center">
-  <img width="600" src="Structure.png">
+  <img width="600" src="Structure.PNG">
 </p>
 <p align="justify">
 
