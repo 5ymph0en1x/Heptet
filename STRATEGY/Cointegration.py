@@ -389,7 +389,7 @@ class EGCointegration(Strategy):
             print('No order')
             return None
         global current_holding
-        print(order)
+        # print(order)
         for i in range(0, 1):
             sign_holding = int(np.sign(current_holding))
             if order[i] == 'Buy':
