@@ -20,7 +20,6 @@ for i in range(1, months):
         z.extract(csv_filename)
         with open(csv_filename, 'r') as csvfile:
             csvreader = csv.reader(csvfile, delimiter=';')
-
             # extracting each data row one by one
             for row in csvreader:
                 # print(row[0])
@@ -30,6 +29,8 @@ for i in range(1, months):
 
 with open('STATICS/FX/2019/%s.csv' % symbol, mode='w', newline='') as ticker:
     ticker_writer = csv.writer(ticker, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    headers = 'date', 'close'
+    ticker_writer.writerow(headers)
     for row in rows:
         ticker_writer.writerow(row)
 
