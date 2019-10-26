@@ -25,6 +25,7 @@ Start by retrieving data for EURJPY and GBPJPY by running 'formater_piphist.py' 
   <img width="600" src="Correlation_Matrix-2019.png">
 </p>
 <p align="justify">
+
 * By running 'Training_Model.py', you get a backtest result at the end which allows tuning strategies.
 <p align="center">
   <img width="563" src="PnL_EURJPY_GBPJPY-2019.png">
