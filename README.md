@@ -5,7 +5,7 @@
 </p>
 <p align="justify">
 
-A TensorFlow implemention in Reinforcement Learning and Pairs Trading. The current status of the project covers implementation of RL in cointegration pair trading based on 1-minute stock market data. For the Reinforcement Learning here we use the N-armed bandit approach. The code is expandable so you can plug any strategies, data API or machine learning algorithms into the tool if you follow the style.
+A TensorFlow implemention in Reinforcement Learning and Pairs Trading. The current status of the project covers implementation of RL in cointegration pair trading based on 1-minute forex market data. For the Reinforcement Learning here we use the N-armed bandit approach. The code is expandable so you can plug any strategies, data API or machine learning algorithms into the tool if you follow the style.
 
 ## Guidance
 * [Medium](https://medium.com/@wai_i/a-gentle-implementation-of-reinforcement-learning-in-pairs-trading-6cdf8533bced) - The corresponding article for this project.
@@ -20,7 +20,7 @@ See the folder EXAMPLE for more details. Please initiate your own virtual enviro
 Start by retrieving data for EURJPY and GBPJPY by running 'formater_piphist.py' with the correct 'symbol' setting. Train a model with 'Training_Model.py' after editing the first two lines of the 'Read prices' section (lines 23-24) to match the data you have just downloaded. Edit 'CONFIG/config_trading.yml' with your personal ids and tokens. Start trading the 2 pairs by running 'Trading_Model.py'. That's all !
 
 ## Going Deeper...
-* You can download multiple pairs historical data and run 'Analysis.py' to explore correlation and cointegration values and graphs.
+* You can download multiple pairs historical data and run 'Analysis.py' (EXAMPLE/Symphoenix) to explore correlation and cointegration values and graphs.
 <p align="center">
   <img width="600" src="Correlation_Matrix-2019.png">
 </p>
