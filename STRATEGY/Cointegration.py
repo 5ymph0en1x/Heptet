@@ -143,7 +143,7 @@ class EGCointegration(Strategy):
     def run_ols(self, x, y):
         reg = LinearRegression().fit(x.reshape(-1, 1), y.reshape(-1, 1))
         self.beta = reg.coef_[0]
-        print('Beta:', self.beta)
+        # print('Beta:', self.beta)
 
     def calibrate(self, start, end, cl):
         x, y, _ = self.get_sample(start, end)
