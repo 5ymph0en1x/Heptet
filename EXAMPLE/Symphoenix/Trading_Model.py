@@ -118,6 +118,7 @@ try:
             ts_c1 = pd.DataFrame(rows_c1, columns=['date', 'close'])
             ts_c1.set_index('date', drop=True, inplace=True)
             ts_c1 = ts_c1.reindex(index=index, method='pad')
+            ts_c1 = ts_c1[ts_c1.index.dayofweek < 5]
 
             time_start = time_end = mid_point
             for c2 in candles_2['candles']:
@@ -137,6 +138,7 @@ try:
             ts_c2 = pd.DataFrame(rows_c2, columns=['date', 'close'])
             ts_c2.set_index('date', drop=True, inplace=True)
             ts_c2 = ts_c2.reindex(index=index, method='pad')
+            ts_c2 = ts_c2[ts_c2.index.dayofweek < 5]
 
             if len(ts_c1) > len(ts_c2):
                 ts_c1 = ts_c1.tail(len(ts_c2))
