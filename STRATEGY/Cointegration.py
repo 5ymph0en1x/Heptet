@@ -108,8 +108,8 @@ class EGCointegration(Strategy):
         df_y[on] = clean_df[on].values
         df_x[col_name] = clean_df[col_name + '_x'].values
         df_y[col_name] = clean_df[col_name + '_y'].values
-        print('X:', len(df_x))
-        print('Y:', len(df_y))
+        # print('X:', len(df_x))
+        # print('Y:', len(df_y))
         df_x_ = len(df_x)
         df_y_ = len(df_y)
         return df_x, df_y
@@ -144,6 +144,11 @@ class EGCointegration(Strategy):
         reg = LinearRegression().fit(x.reshape(-1, 1), y.reshape(-1, 1))
         self.beta = reg.coef_[0]
         # print('Beta:', self.beta)
+        
+    def run_ols_trade(self, x, y):
+        reg = LinearRegression().fit(x.reshape(-1, 1), y.reshape(-1, 1))
+        self.beta = reg.coef_[0]
+        print('Beta:', self.beta)
 
     def calibrate(self, start, end, cl):
         x, y, _ = self.get_sample(start, end)
@@ -156,7 +161,7 @@ class EGCointegration(Strategy):
         self.p = self.get_p_value(x, y)
         print('p_value:', self.p)
         if self.p < cl:
-            self.run_ols(x, y)
+            self.run_ols_trade(x, y)
 
     def gen_signal(self, start, end, trade_th, stop_loss, transaction_cost):
         stop_loss  = trade_th + stop_loss
