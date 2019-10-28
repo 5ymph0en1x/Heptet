@@ -162,6 +162,8 @@ class EGCointegration(Strategy):
         print('p_value:', self.p)
         if self.p < cl:
             self.run_ols_trade(x, y)
+        else:
+            print('No trading opportunity spotted. p_value needs to be less than %s.' % str(cl))
 
     def gen_signal(self, start, end, trade_th, stop_loss, transaction_cost):
         stop_loss  = trade_th + stop_loss
