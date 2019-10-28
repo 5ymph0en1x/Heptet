@@ -66,14 +66,15 @@ candle_1 = instruments.InstrumentsCandles(instrument=instrument_1,
 candle_2 = instruments.InstrumentsCandles(instrument=instrument_2,
                                           params={"count": 1200, "granularity": "M1", "price": "B", "smooth": True})
 
-actual_minute_ej = 0
-actual_minute_gj = 0
+actual_minute_c1 = 0
+actual_minute_c2 = 0
 minute_cached = None
+date_cached = None
 go = False
 first = True
 restored = False
 trained = False
-print('It began in Africa')
+print('It began in Africa...')
 sess = tf.Session()
 
 try:
@@ -81,13 +82,14 @@ try:
     for i in R:
         if i['type'] == 'PRICE':
             if i['instrument'] == instrument_1:
-                actual_minute_ej = parser.parse(i['time']).minute
+                actual_minute_c1 = parser.parse(i['time']).minute
                 # print(actual_minute_ej)
             if i['instrument'] == instrument_2:
-                actual_minute_gj = parser.parse(i['time']).minute
+                actual_minute_c2 = parser.parse(i['time']).minute
                 # print(actual_minute_gj)
-        if actual_minute_ej == actual_minute_gj and minute_cached != actual_minute_ej:
-            minute_cached = actual_minute_ej
+        if actual_minute_c1 == actual_minute_c2 and minute_cached != actual_minute_c1:
+            minute_cached = actual_minute_c1
+            date_cached = datetime.strptime(i['time'][:19], '%Y-%m-%dT%H:%M:%S') - timedelta(minutes=1)
             print('Minute update...')
             if first is False:
                 go = True
@@ -102,9 +104,9 @@ try:
 
             time_start = time_end = mid_point
             for c1 in candles_1['candles']:
-                if c1['complete'] is True:
+                time = datetime.strptime(c1['time'][:19], '%Y-%m-%dT%H:%M:%S')
+                if date_cached >= time:
                     close = c1['bid']['c']
-                    time = datetime.strptime(c1['time'][:19], '%Y-%m-%dT%H:%M:%S')
                     if time < time_start:
                         time_start = time
                     if time > time_end:
@@ -122,9 +124,9 @@ try:
 
             time_start = time_end = mid_point
             for c2 in candles_2['candles']:
-                if c2['complete'] is True:
+                time = datetime.strptime(c2['time'][:19], '%Y-%m-%dT%H:%M:%S')
+                if date_cached >= time:
                     close = c2['bid']['c']
-                    time = datetime.strptime(c2['time'][:19], '%Y-%m-%dT%H:%M:%S')
                     if time < time_start:
                         time_start = time
                     if time > time_end:
