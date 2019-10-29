@@ -322,7 +322,7 @@ class EGCointegration(Strategy):
             print(r.status_code, err)
             return False
         else:
-            print(json.dumps(rv, indent=2))
+            # print(json.dumps(rv, indent=2))
             try:
                 key = 'orderFillTransaction'
                 if key in rv:
@@ -459,7 +459,7 @@ class EGCointegration(Strategy):
         end_forward   = index + n_forward
         return start_forward, end_forward
 
-    def process(self, n_hist, n_forward, trade_th, stop_loss, cl, transaction_cost, index=None, **kwargs):
+    def process_training(self, n_hist, n_forward, trade_th, stop_loss, cl, transaction_cost, index=None, **kwargs):
         index = random.randint(n_hist, len(self.x) - n_forward) if index is None else index
         start_hist, end_hist, start_forward, end_forward = self.get_indices(index, n_hist, n_forward)
         self.calibrate(start_hist, end_hist, cl)
