@@ -238,6 +238,12 @@ class EGCointegration(Strategy):
         unr_profit = float(rv['account'].get('unrealizedPL'))
         return (unr_profit)
 
+    def margincall_percent(self):
+        r = accounts.AccountSummary(accountID=accountID)
+        rv = api.request(r)
+        mcp = rv['account']['marginCallPercent']
+        return mcp
+    
     def close(self, pair_to_close):
         print("Close existing position...")
         r = positions.PositionDetails(accountID=accountID,
@@ -400,19 +406,35 @@ class EGCointegration(Strategy):
         for i in range(0, 1):
             sign_holding = int(np.sign(current_holding))
             if order[i] == 'Buy':
+                if self.count_spe_trades(instrument_1) < 0:
+                    self.close(instrument_1)
+                    self.close(instrument_2)
+                    current_holding = 0
                 close_pos = (sign_holding < 0) * -current_holding
                 buy_sell = close_pos + 1
                 current_holding = current_holding + buy_sell
-                self.orderlaunch([instrument_1, -1])
-                self.orderlaunch([instrument_2, 1])
-                print('SELL C1 / BUY C2 - Current holding:', current_holding)
+                if self.margincall_percent() <= 0.5:
+                    self.orderlaunch([instrument_1, 1])
+                    self.orderlaunch([instrument_2, -1])
+                    print('BUY %s / SELL %s - Current holding: %s'
+                          % (str(instrument_1), str(instrument_2), str(current_holding)))
+                else:
+                    print('Not enough funds to perform selected operation ! Monitoring...')
             elif order[i] == 'Sell':
+                if self.count_spe_trades(instrument_1) > 0:
+                    self.close(instrument_1)
+                    self.close(instrument_2)
+                    current_holding = 0
                 close_pos = (sign_holding > 0) * -current_holding
                 buy_sell = close_pos - 1
                 current_holding = current_holding + buy_sell
-                self.orderlaunch([instrument_1, 1])
-                self.orderlaunch([instrument_2, -1])
-                print('BUY C1 / SELL C2 - Current holding:', current_holding)
+                if self.margincall_percent() <= 0.5:
+                    self.orderlaunch([instrument_1, -1])
+                    self.orderlaunch([instrument_2, 1])
+                    print('SELL %s / BUY %s - Current holding: %s'
+                          % (str(instrument_1), str(instrument_2), str(current_holding)))
+                else:
+                    print('Not enough funds to perform selected operation ! Monitoring...')
             else:
                 listing = self.count_trades()
                 if listing != 0:
