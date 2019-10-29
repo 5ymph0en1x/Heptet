@@ -132,7 +132,7 @@ warnings.filterwarnings('ignore')
 for i in indices:
     if i % 100 == 0:
         print(i)
-    EG_Test.process_training(index=i, transaction_cost=0.000, **action_dict)
+    EG_Test.process(index=i, transaction_cost=0.000, **action_dict)
     trade_record = EG_Test.record
     if (trade_record is not None) and (len(trade_record) > 0):
         # print('value at {}'.format(i))
