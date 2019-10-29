@@ -413,7 +413,7 @@ class EGCointegration(Strategy):
                 close_pos = (sign_holding < 0) * -current_holding
                 buy_sell = close_pos + 1
                 current_holding = current_holding + buy_sell
-                if self.margincall_percent() <= 0.5:
+                if float(self.margincall_percent()) <= 0.5:
                     self.orderlaunch([instrument_1, 1])
                     self.orderlaunch([instrument_2, -1])
                     print('BUY %s / SELL %s - Current holding: %s'
@@ -428,7 +428,7 @@ class EGCointegration(Strategy):
                 close_pos = (sign_holding > 0) * -current_holding
                 buy_sell = close_pos - 1
                 current_holding = current_holding + buy_sell
-                if self.margincall_percent() <= 0.5:
+                if float(self.margincall_percent()) <= 0.5:
                     self.orderlaunch([instrument_1, -1])
                     self.orderlaunch([instrument_2, 1])
                     print('SELL %s / BUY %s - Current holding: %s'
@@ -459,7 +459,7 @@ class EGCointegration(Strategy):
         end_forward   = index + n_forward
         return start_forward, end_forward
 
-    def process_training(self, n_hist, n_forward, trade_th, stop_loss, cl, transaction_cost, index=None, **kwargs):
+    def process(self, n_hist, n_forward, trade_th, stop_loss, cl, transaction_cost, index=None, **kwargs):
         index = random.randint(n_hist, len(self.x) - n_forward) if index is None else index
         start_hist, end_hist, start_forward, end_forward = self.get_indices(index, n_hist, n_forward)
         self.calibrate(start_hist, end_hist, cl)
