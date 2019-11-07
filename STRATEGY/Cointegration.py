@@ -231,7 +231,19 @@ class EGCointegration(Strategy):
         trades_details = rv['trades']
         trades_count = len(trades_details)
         return (trades_count)
-
+    
+    def count_spe_trades(self, symbol):
+        rv = api.request(trades_list)
+        trades_details = rv['trades']
+        j = 0
+        for i in trades_details:
+            if i['instrument'] == symbol:
+                if float(i['initialUnits']) > 0:
+                    j += 1
+                elif float(i['initialUnits']) < 0:
+                    j -= 1
+        return j
+    
     def count_unr_profit(self):
         r = accounts.AccountSummary(accountID=accountID)
         rv = api.request(r)
