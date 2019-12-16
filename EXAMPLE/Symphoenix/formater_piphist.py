@@ -65,6 +65,7 @@ time_start = rows[0][0]
 time_end = rows[len(rows) - 1][0]
 index = pd.date_range(time_start, time_end, freq='min')
 ts = pd.DataFrame(rows, columns=['date', 'close'])
+ts.drop_duplicates(inplace=True)
 ts.set_index('date', drop=True, inplace=True)
 ts = ts.reindex(index=index, method='pad')
 ts = ts[ts.index.dayofweek < 5]
